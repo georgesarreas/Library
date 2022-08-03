@@ -17,8 +17,24 @@
             <h1>Current Books In Library</h1>
         </div>
         <div class="form">
-            <p>Form Info</p>
+            <button class="add-book-btn">Add a new title to the library!</button>
+            <div id="add-book-form" style="display:none"> <!-- hide the form till button is pressed-->
+                <form id="add-book"> 
+                    <!--the use of id instead of class is some issues with dom manipulation-->
+                    <label for="title">Title:</label>
+                    <input type="text" id="title" name="title">
+                    <label for="author">Author:</label>
+                    <input type="text" name="author" id="author">
+                    <label for="pages">Pages:</label>
+                    <input type="text" name="pages" id="pages">
+                    <label for="read">Read/Not read</label>
+                    <input type="text" name="read" id="read">
+                </form>
+                <button type="submit" class="submit-btn">Confirm</button>
+                <button type="reset" class="reset-btn">Clear Form</button>
+            </div>     
         </div>
+
         <!-- books is the div we will get our current books to show -->
         <div class="books"> 
 

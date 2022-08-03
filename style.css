@@ -41,3 +41,26 @@ h1{
     height: 400px;
     display: grid;
 }
+
+#add-book {
+    display: grid;
+    grid-template-columns:.1fr 1fr ;
+    gap:10px ;
+    margin: 50px;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.add-book-btn {
+    margin-top: 40px;
+    border-radius: 10px;
+    padding: 5px;
+    box-shadow: 3px 3px 3px black;
+}
+
+.submit-btn, .reset-btn{
+    border-radius: 10px;
+    padding: 5px;
+    box-shadow: 3px 3px 3px black;
+}
