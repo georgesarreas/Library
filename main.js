@@ -14,7 +14,7 @@ function Book(title,author,pages,read){
 }
 
 // function that lets user input books in the array
-function addbookToLibrary(title,author,pages,read) {
+function addBookToLibrary(title,author,pages,read) {
     let book = new Book (title,author,pages,read);
     myLibrary.push(book);
     displayBooks();
@@ -29,24 +29,50 @@ function displayBooks(){
 
     //need to remove previously displayed cards (remove the divs) before looping over again
     const removeCards = document.querySelectorAll(".card");
-    console.log("previous number of entries", removeCards);
-    for (let i=0; i<removeCards.length; i++) {
+    console.log("node count of card divs : ", removeCards);
+    for (let i=0; i < removeCards.length; i++) {
         removeCards[i].remove();
     }
 
     //loop over library to display
-    myLibrary.forEach(myLibrary => {
+    let index=0;
+    myLibrary.forEach(myLibrarys => {
         const card = document.createElement("div");
         card.classList.add("card");
         books.appendChild(card);
-        for (let key in myLibrary) {
-            console.log(`${key}: ${myLibrary[key]}`); //myLibrary[key] displays the value of the key
-            const para=document.createElement("p");
-            para.textContent = (`${key}: ${myLibrary[key]}`);
-            card.appendChild(para);
-        }
+
+    //create remove book btn and class attribute for each card
+    const removeBookBtn = document.createElement("button");
+    removeBookBtn.classList.add("remove-book-btn");
+    removeBookBtn.textContent = "Remove From Library";
+    console.log ("show me array inside of for-each loop")
+    
+    //link the data attribute of remove btn to the array and card
+    removeBookBtn.dataset.linkedArray = index;
+    index ++;
+    console.log ("link back to the array", removeBookBtn.dataset.linkedArray);
+    card.appendChild(removeBookBtn);
+
+    //event listener for remove book from lib and card from parent div via datalink
+    removeBookBtn.addEventListener("click", removeBookFromLibrary);
+
+    function removeBookFromLibrary() {
+        let bookToRemove = removeBookBtn.dataset.linkedArray;
+        console.log("remove item via data attribute", parseInt(bookToRemove));
+        myLibrary.splice(parseInt(bookToRemove), 1);
+        card.remove();
+        displayBooks();
+    } 
+    
+    //loop over object keys & valuesto display cards
+    for (let key in myLibrarys) {
+        console.log(`${key}: ${myLibrarys[key]}`); //myLibrary[key] displays the value of the key
+        const para = document.createElement("p");
+        para.textContent = (`${key}: ${myLibrarys[key]}`);
+        card.appendChild(para);
+    }
     })
-    };
+};
 
     //display form on click to add a new book to lib
     const addBookBtn = document.querySelector('.add-book-btn');
@@ -67,11 +93,11 @@ function displayBooks(){
         let read = document.getElementById("read").value;
         
         //Break if info is missing
-        if ((title="") || (author="") || (pages="") || (read="")){
+        if ((title=="") || (author=="") || (pages=="") || (read=="")){
             return;
         }
     
-        addbookToLibrary(title,author,pages,read);
+        addBookToLibrary(title,author,pages,read);
 
         //reset the form
         document.getElementById("add-book").reset();
