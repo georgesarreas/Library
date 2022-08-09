@@ -8,9 +8,6 @@ function Book(title,author,pages,read){
     this.author=author;
     this.pages=pages;
     this.read=read;
- //   this.info = function() {
- //       return (title + " by " + author +"," + pages + "pages, " + read)
- //}
 }
 
 // function that lets user input books in the array
@@ -19,9 +16,6 @@ function addBookToLibrary(title,author,pages,read) {
     myLibrary.push(book);
     displayBooks();
 }
-
-//const theHobbit = new Book ("The Hobbit", "J.R.R Tolkien", "294", "not read yet")
-//console.log(theHobbit.info());
 
 //Function to display Library as cards
 function displayBooks(){
@@ -45,11 +39,10 @@ function displayBooks(){
     const removeBookBtn = document.createElement("button");
     removeBookBtn.classList.add("remove-book-btn");
     removeBookBtn.textContent = "Remove From Library";
-    console.log ("show me array inside of for-each loop")
+    console.log ("show me array inside of for-each loop", myLibrary)
     
     //link the data attribute of remove btn to the array and card
     removeBookBtn.dataset.linkedArray = index;
-    index ++;
     console.log ("link back to the array", removeBookBtn.dataset.linkedArray);
     card.appendChild(removeBookBtn);
 
@@ -64,6 +57,37 @@ function displayBooks(){
         displayBooks();
     } 
     
+    //create read status button and attribute for cards
+    const readBtn = document.createElement("button");
+    readBtn.classList.add("read-btn");
+    readBtn.textContent = "toggle read status";
+
+    //link readBtn to the array and card
+    readBtn.dataset.linkedArray = index;
+    console.log("readbtn data set link back to the array", readBtn.dataset.linkedArray);
+    card.appendChild(readBtn);
+
+    //create toggle logic for read btn on array objects
+    readBtn.addEventListener("click", toggleRead);
+
+    function toggleRead() {
+        let bookToToggle = readBtn.dataset.linkedArray;
+        Book.prototype = Object.create(Book.prototype);
+        const toggleBook = new Book();
+        console.log("initial value of read", myLibrary[parseInt(bookToToggle)].Read);
+
+        // check read value to toggle from
+        if ((myLibrary[parseInt(bookToToggle)].Read) == "Yes") {
+            toggleBook.Read ="No";
+            myLibrary[parseInt(bookToToggle)].Read = toggleBook.Read;
+        } else if ((myLibrary[parseInt(bookToToggle)].Read)=="No") {
+            toggleBook.Read= "Yes";
+            myLibrary[parseInt(bookToToggle)].Read = toggleBook.Read
+        }
+        displayBooks();
+
+    }
+
     //loop over object keys & valuesto display cards
     for (let key in myLibrarys) {
         console.log(`${key}: ${myLibrarys[key]}`); //myLibrary[key] displays the value of the key
@@ -71,6 +95,8 @@ function displayBooks(){
         para.textContent = (`${key}: ${myLibrarys[key]}`);
         card.appendChild(para);
     }
+
+    index ++;
     })
 };
 
@@ -111,15 +137,3 @@ function displayBooks(){
     function resetForm() {
         document.getElementById("add-book").reset();
     }
-
-
-    //adding some data manually to test
-    /*addbookToLibrary("The Hobbit", "J.R.R Tolkien", "294", "not read yet");
-    addbookToLibrary("The Random Name", "Someone", "315", "read");
-    addbookToLibrary("The Hobbit", "J.R.R Tolkien", "294", "not read yet");
-    addbookToLibrary("The Random Name", "Someone", "315", "read");addbookToLibrary("The Hobbit", "J.R.R Tolkien", "294", "not read yet");
-    addbookToLibrary("The Random Name", "Someone", "315", "read");
-
-    console.log("end of aray", myLibrary);
-    displayBooks();
-    */
